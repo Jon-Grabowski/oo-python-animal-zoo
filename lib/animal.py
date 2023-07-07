@@ -6,11 +6,14 @@ class Animal:
     nickname_switch = 0
     
     def __init__(self, species, weight, nickname, zoo):
-        self.species = species
+        self.species = species.capitalize()
         self.weight = weight
         self.nickname = nickname
         self.zoo = zoo
         Animal.all.append(self)
+
+    def __repr__(self):
+        return f"<Name: {self.nickname}, Species: {self.species}>"
 
     def get_spec(self):
         return self._species   
@@ -32,10 +35,13 @@ class Animal:
             print("Nickname can not change")
     nickname = property(get_nick, set_nick)
 
-#TODO Left off at *Animal.find_by_species from README 
 
-a1 = Animal( 'Lion', 75, 'Luke', 'zoo' )
-a2 = Animal( 'Cat', 7, 'Potato', 'zoo2' )
-print(a1.zoo)
-# a1.nickname = "pig"
-# print(a1.nickname)
+
+
+    def find_by_species(species):
+        species_list = [animal for animal in Animal.all if animal.species.lower() == species.lower()]
+        if len(species_list) > 0:
+            print(f'There are {len(species_list)} animals of that species.')
+            return species_list
+        else:
+            print('No animals of that species, try looking for a different one!')
